@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-{{ .Values.env }}
+  labels:
+    app: {{ .Chart.Name }}-{{ .Values.env }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}-{{ .Values.env }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}-{{ .Values.env }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}-{{ .Values.env }}
+        image: server.atzawada.io:32000/hockey-utils:{{ .Values.tag }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80

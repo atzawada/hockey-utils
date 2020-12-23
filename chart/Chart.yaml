@@ -1,0 +1,7 @@
+  
+apiVersion: v1
+appVersion: "0.0.1"
+description: Installs the penalty calculator website.
+home: https://github.com/atzawada/hockey-utils
+name: hockey-utils
+version: 0.0.1
