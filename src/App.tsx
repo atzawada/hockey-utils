@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 interface Props {
@@ -42,7 +41,7 @@ export class App extends Component<Props, State> {
     let minutes = this.state.minutes;
     let periodNum = this.state.periodNum;
 
-    if (periodNum == 0) {
+    if (periodNum == 0 || this.state.periodLength == 0) {
       return;
     }
     
@@ -86,7 +85,7 @@ export class App extends Component<Props, State> {
     console.log("Returning message");
     if (this.state.resultPeriod > 0 && this.state.resultPeriod < 4) {
       return (
-        <p>Player comes out after the first whistle after { this.state.resultMinutes }:{ this.state.resultSeconds } remaining in period { this.state.resultPeriod }. </p>
+        <p>Player returns at the first whistle after { this.state.resultMinutes }:{ this.state.resultSeconds } remaining in period { this.state.resultPeriod }. </p>
       )
     } else if (this.state.resultPeriod > 3) {
       return (
@@ -104,44 +103,82 @@ export class App extends Component<Props, State> {
       <div className="App">
         <header className="App-header">
           <h1>Ice Hockey Penalty Time Calculator</h1>
-          <label>
-            Set Period number.
-            <input type="number" min="1" max="3" value={this.state.periodNum} onChange={event => this.setState({periodNum: +event.target.value })} />
-          </label>
-          <label>
-            Set Period Length.
-            <input type="number" min="1" max="60" value={this.state.periodLength} onChange={event => this.setState({periodLength: +event.target.value })}/>
-          </label>
+          <table>
+            <tr>
+              <td>
+                <label>
+                  Set Period number:
+                </label>
+              </td>
+              <td>
+                <input type="number" min="1" max="3" value={this.state.periodNum} onChange={event => this.setState({periodNum: +event.target.value })} />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label>
+                  Set Period Length:
+                </label>
+              </td>
+              <td>
+                <input type="number" min="1" max="60" value={this.state.periodLength} onChange={event => this.setState({periodLength: +event.target.value })}/>
+              </td>
+            </tr>
+          </table>
           <label>Common Period Lengths</label>
-          <button onClick={ event => this.setPeriodLength(12) }>
-            12 Min
-          </button>
-          <button onClick={ event => this.setPeriodLength(15) }>
-            15 Min
-          </button>
-          <button onClick={ event => this.setPeriodLength(17) }>
-            17 Min
-          </button>
-          <button onClick={ event => this.setPeriodLength(20) }>
-            20 Min
-          </button>
+          <div className="commonPeriodLengths">
+            <button onClick={ event => this.setPeriodLength(12) }>
+              12 Min
+            </button>
+            <button onClick={ event => this.setPeriodLength(15) }>
+              15 Min
+            </button>
+            <button onClick={ event => this.setPeriodLength(17) }>
+              17 Min
+            </button>
+            <button onClick={ event => this.setPeriodLength(20) }>
+              20 Min
+            </button>
+          </div>
+          <br />
           <label>
-            Set Time In Period.
-            <input type="number" min="0" max={ this.state.periodLength } value={this.state.minutes} onChange={event => this.setState({minutes: +event.target.value })}/>
-            <input type="number" min="0" max="60" value={this.state.seconds} onChange={event => this.setState({seconds: +event.target.value })}/>
+            Set Time Remaining In Period:
           </label>
-          <button onClick={ event => this.calculateResult(0, 0, 1)}>
-            10 Min Misconduct
-          </button>
-          <button onClick={ event => this.calculateResult(1, 0, 1)}>
-            Minor + Misconduct (2 + 10)
-          </button>
-          <button onClick={ event => this.calculateResult(2, 0, 1)}>
-            Double Minor + Misconduct (4 + 10)
-          </button>
-          <button onClick={ event => this.calculateResult(0, 1, 1)}>
-            Major + Misconduct (5 + 10)
-          </button>
+          <table>
+            <tr>
+              <td>
+                <label>
+                  Minutes: 
+                </label>
+              </td>
+              <td>
+                <input type="number" min="0" max={ this.state.periodLength } value={this.state.minutes} onChange={event => this.setState({minutes: +event.target.value })}/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Seconds:
+              </td>
+              <td>
+                <input type="number" min="0" max="60" value={this.state.seconds} onChange={event => this.setState({seconds: +event.target.value })}/>
+              </td>
+            </tr>
+          </table>
+          <br />
+          <div className="commonPenalties">
+            <button onClick={ event => this.calculateResult(0, 0, 1)}>
+              10 Min Misconduct
+            </button>
+            <button onClick={ event => this.calculateResult(1, 0, 1)}>
+              Minor + Misconduct (2 + 10)
+            </button>
+            <button onClick={ event => this.calculateResult(2, 0, 1)}>
+              Double Minor + Misconduct (4 + 10)
+            </button>
+            <button onClick={ event => this.calculateResult(0, 1, 1)}>
+              Major + Misconduct (5 + 10)
+            </button>
+          </div>
           { this.returnMessage() }
         </header>
       </div>

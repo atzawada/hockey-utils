@@ -36,3 +36,30 @@
     transform: rotate(360deg);
   }
 }
+
+.commonPeriodLengths button {
+  display: inline;
+  margin: 3px;
+}
+
+.commonPenalties {
+  padding-top: 10px;
+}
+
+.commonPenalties button {
+  display: block;
+  width: 250px;
+  margin: 3px;
+}
+
+h1 {
+  width: 300px;
+}
+
+table label {
+  width: 190px;
+}
+
+table input {
+  width: 80px;
+}
